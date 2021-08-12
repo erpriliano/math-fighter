@@ -26,6 +26,12 @@ export default class MathFighterScene extends Phaser.Scene
     }
 
     create() {
+        // Create bg
+        this.add.image(240, 320, 'background')
+        // Create fight-bg
+        const fight_bg = this.add.image(240, 160, 'fight-bg')
+        // Create tile
+        const tile = this.physics.add.staticImage(240, fight_bg.height - 40, 'tile')
 
     }
 }
