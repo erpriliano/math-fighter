@@ -8,7 +8,8 @@ export default class MathFighterScene extends Phaser.Scene
 	}
 
     init() {
-
+        this.gameHalfWidth = this.scale.width * 0.5
+        this.gameHalfHeight = this.scale.height * 0.5
     }
 
 	preload() {
