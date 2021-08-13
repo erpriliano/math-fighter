@@ -17,6 +17,11 @@ export default class MathFighterScene extends Phaser.Scene {
 
         // Initialize property slash
         this.slash = undefined
+
+        // Initialize property to start game
+        this.startGame = false
+        this.questionText = undefined
+        this.resultText = undefined
     }
 
     preload() {
@@ -92,8 +97,22 @@ export default class MathFighterScene extends Phaser.Scene {
             .setDepth(1)
             .setCollideWorldBounds(true)
 
-        // Call metho createAnimation
+        // Call method createAnimation
         this.createAnimation()
+
+        // Start game
+        let start_button = this.add
+            .image(this.gameHalfWidth, this.gameHalfHeight + 181, 'start-btn')
+            .setInteractive()
+
+        start_button.on(
+            'pointerdown',
+            () => {
+                this.gameStart()
+                start_button.destroy()
+            },
+            this
+        )
     }
 
     createAnimation() {
@@ -165,6 +184,21 @@ export default class MathFighterScene extends Phaser.Scene {
             }),
             frameRate: 10,
             repeat: -1,
+        })
+    }
+
+    gameStart() {
+        this.startGame = true
+        this.player.anims.play('player-standby', true)
+        this.enemy.anims.play('enemy-standby', true)
+
+        this.resultText = this.add.text(this.gameHalfWidth, 200, '0', {
+            fontSize: '32px',
+            fill: '#000',
+        })
+        this.questionText = this.add.text(this.gameHalfWidth, 200, '0', {
+            fontSize: '32px',
+            fill: '#000',
         })
     }
 }
