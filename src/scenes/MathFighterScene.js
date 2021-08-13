@@ -22,6 +22,20 @@ export default class MathFighterScene extends Phaser.Scene {
         this.startGame = false
         this.questionText = undefined
         this.resultText = undefined
+
+        // Initialize button number
+        this.button1 = undefined
+        this.button2 = undefined
+        this.button3 = undefined
+        this.button4 = undefined
+        this.button5 = undefined
+        this.button6 = undefined
+        this.button7 = undefined
+        this.button8 = undefined
+        this.button9 = undefined
+        this.button0 = undefined
+        this.buttonDel = undefined
+        this.buttonOk = undefined
     }
 
     preload() {
@@ -200,5 +214,122 @@ export default class MathFighterScene extends Phaser.Scene {
             fontSize: '32px',
             fill: '#000',
         })
+
+        this.createButtons()
+    }
+
+    createButtons() {
+        const startPositionY = this.scale.height - 246
+        const widthDifference = 131
+        const heightDifference = 71.25
+
+        // Middle buttons
+        this.button2 = this.add
+            .image(this.gameHalfWidth, startPositionY, 'numbers', 1)
+            .setInteractive()
+            .setData('value', 2)
+        this.button5 = this.add
+            .image(
+                this.gameHalfWidth,
+                this.button2.y + heightDifference,
+                'numbers',
+                4
+            )
+            .setInteractive()
+            .setData('value', 5)
+        this.button8 = this.add
+            .image(
+                this.gameHalfWidth,
+                this.button5.y + heightDifference,
+                'numbers',
+                7
+            )
+            .setInteractive()
+            .setData('value', 8)
+        this.button0 = this.add
+            .image(
+                this.gameHalfWidth,
+                this.button8.y + heightDifference,
+                'numbers',
+                10
+            )
+            .setInteractive()
+            .setData('value', 0)
+
+        // Left buttons
+        this.button1 = this.add
+            .image(
+                this.button2.x - widthDifference,
+                startPositionY,
+                'numbers',
+                0
+            )
+            .setInteractive()
+            .setData('value', 1)
+        this.button4 = this.add
+            .image(
+                this.button5.x - widthDifference,
+                this.button1.y + heightDifference,
+                'numbers',
+                3
+            )
+            .setInteractive()
+            .setData('value', 4)
+        this.button7 = this.add
+            .image(
+                this.button8.x - widthDifference,
+                this.button4.y + heightDifference,
+                'numbers',
+                6
+            )
+            .setInteractive()
+            .setData('value', 7)
+        this.buttonDel = this.add
+            .image(
+                this.button0.x - widthDifference,
+                this.button7.y + heightDifference,
+                'numbers',
+                9
+            )
+            .setInteractive()
+            .setData('value', 'del')
+
+        // Right buttons
+        this.button3 = this.add
+            .image(
+                this.button2.x + widthDifference,
+                startPositionY,
+                'numbers',
+                2
+            )
+            .setInteractive()
+            .setData('value', 3)
+        this.button6 = this.add
+            .image(
+                this.button5.x + widthDifference,
+                this.button3.y + heightDifference,
+                'numbers',
+                5
+            )
+            .setInteractive()
+            .setData('value', 6)
+        this.button9 = this.add
+            .image(
+                this.button8.x + widthDifference,
+                this.button6.y + heightDifference,
+                'numbers',
+                8
+            )
+            .setInteractive()
+            .setData('value', 9)
+        this.buttonOk = this.add
+            .image(
+                this.button0.x + widthDifference,
+                this.button9.y + heightDifference,
+                'numbers',
+                11
+            )
+            .setInteractive()
+            .setData('value', 'ok')
     }
 }
