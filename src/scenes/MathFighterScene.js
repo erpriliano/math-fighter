@@ -91,5 +91,80 @@ export default class MathFighterScene extends Phaser.Scene {
             .setOffset(0, -10)
             .setDepth(1)
             .setCollideWorldBounds(true)
+
+        // Call metho createAnimation
+        this.createAnimation()
+    }
+
+    createAnimation() {
+        // PLayer animation
+        this.anims.create({
+            key: 'player-die',
+            frames: this.anims.generateFrameNumbers('player', {
+                start: 0,
+                end: 4,
+            }),
+            frameRate: 10,
+        })
+        this.anims.create({
+            key: 'player-hit',
+            frames: this.anims.generateFrameNumbers('player', {
+                start: 5,
+                end: 9,
+            }),
+            frameRate: 10,
+        })
+        this.anims.create({
+            key: 'player-attack',
+            frames: this.anims.generateFrameNumbers('player', {
+                start: 10,
+                end: 14,
+            }),
+            frameRate: 10,
+        })
+        this.anims.create({
+            key: 'player-standby',
+            frames: this.anims.generateFrameNumbers('player', {
+                start: 15,
+                end: 19,
+            }),
+            frameRate: 10,
+            repeat: -1,
+        })
+
+        // Enemy animation
+        this.anims.create({
+            key: 'enemy-die',
+            frames: this.anims.generateFrameNumbers('enemy', {
+                start: 0,
+                end: 4,
+            }),
+            frameRate: 10,
+        })
+        this.anims.create({
+            key: 'enemy-hit',
+            frames: this.anims.generateFrameNumbers('enemy', {
+                start: 5,
+                end: 9,
+            }),
+            frameRate: 10,
+        })
+        this.anims.create({
+            key: 'enemy-attack',
+            frames: this.anims.generateFrameNumbers('enemy', {
+                start: 10,
+                end: 14,
+            }),
+            frameRate: 10,
+        })
+        this.anims.create({
+            key: 'enemy-standby',
+            frames: this.anims.generateFrameNumbers('enemy', {
+                start: 15,
+                end: 19,
+            }),
+            frameRate: 10,
+            repeat: -1,
+        })
     }
 }
