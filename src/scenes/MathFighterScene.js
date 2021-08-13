@@ -13,6 +13,9 @@ export default class MathFighterScene extends Phaser.Scene
 
         // Initialize property 'player'
         this.player = undefined
+
+        // Initialize property 'enemy'
+        this.enemy = undefined
     }
 
 	preload() {
@@ -37,9 +40,14 @@ export default class MathFighterScene extends Phaser.Scene
         // Create tile
         const tile = this.physics.add.staticImage(240, fight_bg.height - 40, 'tile')
 
+        // Create player
         this.player = this.physics.add.sprite(this.gameHalfWidth - 150, this.gameHalfHeight - 200, 'player').setOffset(-50, -8).setBounce(0.2)
-
         // Collide the player with the tile
         this.physics.add.collider(this.player, tile)
+
+        // Create enemy
+        this.enemy = this.physics.add.sprite(this.gameHalfWidth + 150, this.gameHalfHeight - 200, 'enemy').setOffset(50, -8).setBounce(0.2).setFlipX(true)
+        // Collide the enemy with the tile
+        this.physics.add.collider(this.enemy, tile)
     }
 }
