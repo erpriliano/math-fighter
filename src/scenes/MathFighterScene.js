@@ -37,7 +37,7 @@ export default class MathFighterScene extends Phaser.Scene
         // Create tile
         const tile = this.physics.add.staticImage(240, fight_bg.height - 40, 'tile')
 
-        this.player = this.physics.add.sprite(this.gameHalfWidth - 150, this.gameHalfHeight - 200, 'player')
+        this.player = this.physics.add.sprite(this.gameHalfWidth - 150, this.gameHalfHeight - 200, 'player').setOffset(-50, -8).setBounce(0.2)
 
         // Collide the player with the tile
         this.physics.add.collider(this.player, tile)
