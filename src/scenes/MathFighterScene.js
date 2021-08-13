@@ -16,6 +16,9 @@ export default class MathFighterScene extends Phaser.Scene
 
         // Initialize property 'enemy'
         this.enemy = undefined
+
+        // Initialize property slash
+        this.slash = undefined
     }
 
 	preload() {
@@ -49,5 +52,8 @@ export default class MathFighterScene extends Phaser.Scene
         this.enemy = this.physics.add.sprite(this.gameHalfWidth + 150, this.gameHalfHeight - 200, 'enemy').setOffset(50, -8).setBounce(0.2).setFlipX(true)
         // Collide the enemy with the tile
         this.physics.add.collider(this.enemy, tile)
+
+        // Create slash
+        this.slash = this.physics.add.sprite(240, 60, 'slash').setActive(false).setVisible(false).setGravityY(-500).setOffset(0, -10).setDepth(1).setCollideWorldBounds(true)
     }
 }
