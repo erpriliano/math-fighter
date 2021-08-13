@@ -10,6 +10,9 @@ export default class MathFighterScene extends Phaser.Scene
     init() {
         this.gameHalfWidth = this.scale.width * 0.5
         this.gameHalfHeight = this.scale.height * 0.5
+
+        // Initialize property 'player'
+        this.player = undefined
     }
 
 	preload() {
@@ -34,5 +37,9 @@ export default class MathFighterScene extends Phaser.Scene
         // Create tile
         const tile = this.physics.add.staticImage(240, fight_bg.height - 40, 'tile')
 
+        this.player = this.physics.add.sprite(this.gameHalfWidth - 150, this.gameHalfHeight - 200, 'player')
+
+        // Collide the player with the tile
+        this.physics.add.collider(this.player, tile)
     }
 }
