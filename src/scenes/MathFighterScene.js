@@ -228,6 +228,7 @@ export default class MathFighterScene extends Phaser.Scene {
             .image(this.gameHalfWidth, startPositionY, 'numbers', 1)
             .setInteractive()
             .setData('value', 2)
+
         this.button5 = this.add
             .image(
                 this.gameHalfWidth,
@@ -237,6 +238,7 @@ export default class MathFighterScene extends Phaser.Scene {
             )
             .setInteractive()
             .setData('value', 5)
+
         this.button8 = this.add
             .image(
                 this.gameHalfWidth,
@@ -246,6 +248,7 @@ export default class MathFighterScene extends Phaser.Scene {
             )
             .setInteractive()
             .setData('value', 8)
+
         this.button0 = this.add
             .image(
                 this.gameHalfWidth,
@@ -266,6 +269,7 @@ export default class MathFighterScene extends Phaser.Scene {
             )
             .setInteractive()
             .setData('value', 1)
+
         this.button4 = this.add
             .image(
                 this.button5.x - widthDifference,
@@ -275,6 +279,7 @@ export default class MathFighterScene extends Phaser.Scene {
             )
             .setInteractive()
             .setData('value', 4)
+
         this.button7 = this.add
             .image(
                 this.button8.x - widthDifference,
@@ -284,6 +289,7 @@ export default class MathFighterScene extends Phaser.Scene {
             )
             .setInteractive()
             .setData('value', 7)
+
         this.buttonDel = this.add
             .image(
                 this.button0.x - widthDifference,
@@ -304,6 +310,7 @@ export default class MathFighterScene extends Phaser.Scene {
             )
             .setInteractive()
             .setData('value', 3)
+
         this.button6 = this.add
             .image(
                 this.button5.x + widthDifference,
@@ -313,6 +320,7 @@ export default class MathFighterScene extends Phaser.Scene {
             )
             .setInteractive()
             .setData('value', 6)
+
         this.button9 = this.add
             .image(
                 this.button8.x + widthDifference,
@@ -322,6 +330,7 @@ export default class MathFighterScene extends Phaser.Scene {
             )
             .setInteractive()
             .setData('value', 9)
+
         this.buttonOk = this.add
             .image(
                 this.button0.x + widthDifference,
