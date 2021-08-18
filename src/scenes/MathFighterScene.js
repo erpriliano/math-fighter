@@ -43,6 +43,13 @@ export default class MathFighterScene extends Phaser.Scene {
 
         // Initialize questions
         this.questions = []
+
+        // Initialize variable to check for correct answer
+        this.correctAnswer = undefined
+
+        // Initialize characters to attack
+        this.playerAttack = false
+        this.enemyAttack = false
     }
 
     preload() {
@@ -134,6 +141,47 @@ export default class MathFighterScene extends Phaser.Scene {
             },
             this
         )
+
+        // Overlap player and slash
+        this.physics.add.overlap(
+            this.player,
+            this.slash,
+            this.spriteHit,
+            undefined,
+            this
+        )
+
+        // Overlap enemy and slash
+        this.physics.add.overlap(
+            this.enemy,
+            this.slash,
+            this.spriteHit,
+            undefined,
+            this
+        )
+    }
+
+    update(time) {
+        if (this.correctAnswer == true && !this.playerAttack) {
+            this.player.anims.play('player-attack', true)
+            this.time.delayedCall(500, () => {
+                this.createSlash(this.player.x + 60, this.player.y, 0, 600)
+            })
+            this.playerAttack = true
+        }
+
+        if (this.correctAnswer == undefined) {
+            this.player.anims.play('player-standby', true)
+            this.enemy.anims.play('enemy-standby', true)
+        }
+
+        if (this.correctAnswer == false && !this.enemyAttack) {
+            this.enemy.anims.play('enemy-attack', true)
+            this.time.delayedCall(500, () => {
+                this.createSlash(this.enemy.x - 60, this.enemy.y, 2, -600)
+            })
+            this.playerAttack = true
+        }
     }
 
     createAnimation() {
@@ -439,5 +487,43 @@ export default class MathFighterScene extends Phaser.Scene {
         this.questionText.setText(this.questions[0])
         const textHalfWidth = this.questionText.width * 0.5
         this.questionText.setX(this.gameHalfWidth - textHalfWidth)
+    }
+
+    checkAnswer() {
+        if (this.number == this.questions[1]) {
+            this.correctAnswer = true
+        } else {
+            this.correctAnswer = false
+        }
+    }
+
+    createSlash(x, y, frame, velocity, flip = false) {
+        this.slash
+            .setPosition(x, y)
+            .setActive(true)
+            .setVisible(true)
+            .setFrame(frame)
+            .setVelocityX(velocity)
+            .setFlipX(flip)
+    }
+
+    spriteHit(slash, sprite) {
+        slash.x = 0
+        slash.y = 0
+        slash.setActive(false)
+        slash.setVisible(false)
+
+        if (sprite.texture.key == 'player') {
+            sprite.anims.play('player-hit', true)
+        } else {
+            sprite.anims.play('enemy-hit', true)
+        }
+
+        this.time.delayedCall(500, () => {
+            this.playerAttack = false
+            this.enemyAttack = false
+            this.correctAnswer = undefined
+            this.generateQuestion()
+        })
     }
 }
