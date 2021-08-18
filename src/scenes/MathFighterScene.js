@@ -36,6 +36,10 @@ export default class MathFighterScene extends Phaser.Scene {
         this.button0 = undefined
         this.buttonDel = undefined
         this.buttonOk = undefined
+
+        // Initialize numbers
+        this.numberArray = []
+        this.number = 0
     }
 
     preload() {
@@ -210,12 +214,20 @@ export default class MathFighterScene extends Phaser.Scene {
             fontSize: '32px',
             fill: '#000',
         })
-        this.questionText = this.add.text(this.gameHalfWidth, 200, '0', {
-            fontSize: '32px',
-            fill: '#000',
-        })
+        this.questionText = this.add.text(
+            this.gameHalfWidth,
+            this.gameHalfHeight - 200,
+            '0',
+            {
+                fontSize: '32px',
+                fill: '#000',
+            }
+        )
 
         this.createButtons()
+
+        // Call method addNumber
+        this.input.on('gameobjectdown', this.addNumber, this)
     }
 
     createButtons() {
@@ -340,5 +352,40 @@ export default class MathFighterScene extends Phaser.Scene {
             )
             .setInteractive()
             .setData('value', 'ok')
+    }
+
+    addNumber(pointer, object, event) {
+        let value = object.getData('value')
+
+        if (isNaN(value)) {
+            if (value == 'del') {
+                this.numberArray.pop()
+                if (this.numberArray.length < 1) {
+                    this.numberArray[0] = 0
+                }
+            }
+
+            if (value == 'ok') {
+                this.checkAnswer()
+                this.numberArray = []
+                this.numberArray[0] = 0
+            }
+        } else {
+            if (this.numberArray.length == 1 && this.numberArray[0] == 0) {
+                this.numberArray[0] = value
+            } else {
+                if (this.numberArray.length < 10) {
+                    this.numberArray.push(value)
+                }
+            }
+        }
+
+        this.number = parseInt(this.numberArray.join(''))
+
+        // Show it to screen
+        this.resultText.setText(this.number)
+        const textHalfWidth = this.resultText.width * 0.5
+        this.resultText.setX(this.gameHalfWidth - textHalfWidth)
+        event.stopPropagation()
     }
 }
