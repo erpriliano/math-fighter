@@ -40,6 +40,9 @@ export default class MathFighterScene extends Phaser.Scene {
         // Initialize numbers
         this.numberArray = []
         this.number = 0
+
+        // Initialize questions
+        this.questions = []
     }
 
     preload() {
@@ -228,6 +231,9 @@ export default class MathFighterScene extends Phaser.Scene {
 
         // Call method addNumber
         this.input.on('gameobjectdown', this.addNumber, this)
+
+        // Call method generateQuestion
+        this.generateQuestion()
     }
 
     createButtons() {
@@ -387,5 +393,51 @@ export default class MathFighterScene extends Phaser.Scene {
         const textHalfWidth = this.resultText.width * 0.5
         this.resultText.setX(this.gameHalfWidth - textHalfWidth)
         event.stopPropagation()
+    }
+
+    getOperator() {
+        const operators = ['+', '-', 'x', ':']
+        return operators[Phaser.Math.Between(0, operators.length - 1)]
+    }
+
+    generateQuestion() {
+        let numberA = Phaser.Math.Between(0, 50)
+        let numberB = Phaser.Math.Between(0, 50)
+        let operator = this.getOperator()
+
+        if (operator === '+') {
+            this.questions[0] = `${numberA} + ${numberB}`
+            this.questions[1] = numberA + numberB
+        }
+
+        if (operator === '-') {
+            if (numberB > numberA) {
+                this.questions[0] = `${numberB} - ${numberA}`
+                this.questions[1] = numberB - numberA
+            } else {
+                this.questions[0] = `${numberA} - ${numberB}`
+                this.questions[1] = numberA - numberB
+            }
+        }
+
+        if (operator === 'x') {
+            this.questions[0] = `${numberA} x ${numberB}`
+            this.questions[1] = numberA * numberB
+        }
+
+        if (operator === ':') {
+            do {
+                numberA = Phaser.Math.Between(0, 50)
+                numberB = Phaser.Math.Between(0, 50)
+            } while (!Number.isInteger(numberA / numberB))
+
+            // Original code
+            this.questions[0] = `${numberA} : ${numberB}`
+            this.questions[1] = numberA / numberB
+        }
+
+        this.questionText.setText(this.questions[0])
+        const textHalfWidth = this.questionText.width * 0.5
+        this.questionText.setX(this.gameHalfWidth - textHalfWidth)
     }
 }
