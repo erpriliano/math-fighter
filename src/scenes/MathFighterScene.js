@@ -144,19 +144,19 @@ export default class MathFighterScene extends Phaser.Scene {
 
         // Overlap player and slash
         this.physics.add.overlap(
-            this.player,
             this.slash,
+            this.player,
             this.spriteHit,
-            undefined,
+            null,
             this
         )
 
         // Overlap enemy and slash
         this.physics.add.overlap(
-            this.enemy,
             this.slash,
+            this.enemy,
             this.spriteHit,
-            undefined,
+            null,
             this
         )
     }
@@ -180,7 +180,7 @@ export default class MathFighterScene extends Phaser.Scene {
             this.time.delayedCall(500, () => {
                 this.createSlash(this.enemy.x - 60, this.enemy.y, 2, -600)
             })
-            this.playerAttack = true
+            this.enemyAttack = true
         }
     }
 
