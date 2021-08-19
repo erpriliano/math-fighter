@@ -1,4 +1,5 @@
 import Phaser from 'phaser'
+import ScoreLabel from '../ui/ScoreLabel'
 
 export default class MathFighterScene extends Phaser.Scene {
     constructor() {
@@ -50,6 +51,9 @@ export default class MathFighterScene extends Phaser.Scene {
         // Initialize characters to attack
         this.playerAttack = false
         this.enemyAttack = false
+
+        // Initialize score label
+        this.scoreLabel = 0
     }
 
     preload() {
@@ -159,6 +163,8 @@ export default class MathFighterScene extends Phaser.Scene {
             null,
             this
         )
+
+        this.scoreLabel = this.createScoreLabel(16, 26, 0)
     }
 
     update(time) {
@@ -515,8 +521,12 @@ export default class MathFighterScene extends Phaser.Scene {
 
         if (sprite.texture.key == 'player') {
             sprite.anims.play('player-hit', true)
+            if (this.scoreLabel.getScore() > 0) {
+                this.scoreLabel.add(-50)
+            }
         } else {
             sprite.anims.play('enemy-hit', true)
+            this.scoreLabel.add(50)
         }
 
         this.time.delayedCall(500, () => {
@@ -525,5 +535,14 @@ export default class MathFighterScene extends Phaser.Scene {
             this.correctAnswer = undefined
             this.generateQuestion()
         })
+    }
+
+    createScoreLabel(x, y, score) {
+        const style = { fontSize: '24px', color: '#000', fontStyle: 'bold' }
+
+        const label = new ScoreLabel(this, x, y, score, style).setDepth(1)
+
+        this.add.existing(label)
+        return label
     }
 }
