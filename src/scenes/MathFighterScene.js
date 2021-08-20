@@ -54,6 +54,12 @@ export default class MathFighterScene extends Phaser.Scene {
 
         // Initialize score label
         this.scoreLabel = 0
+
+        // Initialize timer
+        this.timerLabel = undefined
+        this.countdownTimer = 60
+
+        this.timedEvent = undefined
     }
 
     preload() {
@@ -164,7 +170,13 @@ export default class MathFighterScene extends Phaser.Scene {
             this
         )
 
+        // Show score label
         this.scoreLabel = this.createScoreLabel(16, 26, 0)
+
+        // Show timer label
+        this.timerLabel = this.add
+            .text(this.gameHalfWidth, 16, null)
+            .setDepth(5)
     }
 
     update(time) {
@@ -187,6 +199,17 @@ export default class MathFighterScene extends Phaser.Scene {
                 this.createSlash(this.enemy.x - 60, this.enemy.y, 2, -600)
             })
             this.enemyAttack = true
+        }
+
+        if ((this.startGame = true)) {
+            this.timerLabel
+                .setStyle({
+                    fontSize: '24px',
+                    color: '#000',
+                    fontStyle: 'bold',
+                    align: 'center',
+                })
+                .setText(this.countdownTimer)
         }
     }
 
@@ -288,6 +311,13 @@ export default class MathFighterScene extends Phaser.Scene {
 
         // Call method generateQuestion
         this.generateQuestion()
+
+        this.timedEvent = this.time.addEvent({
+            delay: 1000,
+            callback: this.gameOver,
+            callbackScope: this,
+            loop: true,
+        })
     }
 
     createButtons() {
@@ -544,5 +574,15 @@ export default class MathFighterScene extends Phaser.Scene {
 
         this.add.existing(label)
         return label
+    }
+
+    gameOver() {
+        this.countdownTimer -= 1
+
+        if (this.countdownTimer < 0) {
+            this.scene.start('game-over-scene', {
+                score: this.scoreLabel.getScore(),
+            })
+        }
     }
 }
